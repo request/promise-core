@@ -1,19 +1,32 @@
 {
   "name": "@request/promise-core",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Core Promise support implementation for the simplified HTTP request client 'request'.",
+  "keywords": [
+    "xhr",
+    "http",
+    "https",
+    "promise",
+    "request",
+    "then",
+    "thenable",
+    "native"
+  ],
+  "main": "./lib/rp.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/gulp ci"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/request/promise-core.git"
   },
-  "author": "",
+  "author": "Nicolai Kamenzky (https://github.com/analog-nico)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/request/promise-core/issues"
   },
-  "homepage": "https://github.com/request/promise-core#readme"
+  "homepage": "https://github.com/request/promise-core#readme",
+  "engines": {
+    "node": ">=0.10.0"
+  }
 }
