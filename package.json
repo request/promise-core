@@ -10,11 +10,13 @@
     "request",
     "then",
     "thenable",
-    "native"
+    "core"
   ],
   "main": "./lib/rp.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp ci"
+    "test": "./node_modules/.bin/gulp ci",
+    "publish-please": "publish-please",
+    "prepublish": "publish-please guard"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,23 @@
   "homepage": "https://github.com/request/promise-core#readme",
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1"
+  },
+  "peerDependencies": {
+    "request": "^2.34"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chalk": "^1.1.3",
+    "gulp": "^3.9.1",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-eslint": "^2.0.0",
+    "gulp-istanbul": "^0.10.4",
+    "gulp-mocha": "^2.2.0",
+    "publish-please": "^2.1.3",
+    "rimraf": "^2.5.2",
+    "run-sequence": "^1.2.1"
   }
 }
