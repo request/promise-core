@@ -8,13 +8,14 @@ var chalk = require('chalk');
 var rimraf = require('rimraf');
 var coveralls = require('gulp-coveralls');
 var eslint = require('gulp-eslint');
+var _ = require('lodash');
 
 var chai = require('chai');
 global.expect = chai.expect;
 
 
 var paths = {
-    libJsFiles: './lib/**/*.js',
+    libJsFiles: ['./lib/**/*.js', './errors.js'],
     specFiles: './test/spec/**/*.js',
     fixtureFiles: './test/fixtures/**/*.txt',
     gulpfile: './gulpfile.js',
@@ -26,18 +27,18 @@ gulp.task('dev', ['watch', 'validate']);
 
 gulp.task('watch', function () {
 
-    gulp.watch([
+    gulp.watch(_.flatten([
         paths.libJsFiles,
         paths.specFiles,
         paths.fixtureFiles,
         paths.gulpfile
-    ], [
+    ]), [
         'validate'
     ]);
 
-    gulp.watch([
+    gulp.watch(_.flatten([
         paths.eslintrc
-    ], [
+    ]), [
         'lint'
     ]);
 
@@ -49,7 +50,12 @@ gulp.task('validate', function (done) {
 
 gulp.task('lint', function () {
 
-    return gulp.src([paths.libJsFiles, paths.gulpfile, paths.specFiles, paths.gulpfile])
+    return gulp.src(_.flatten([
+        paths.libJsFiles,
+        paths.gulpfile,
+        paths.specFiles,
+        paths.gulpfile
+    ]))
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
