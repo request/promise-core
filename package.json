@@ -12,7 +12,7 @@
     "thenable",
     "core"
   ],
-  "main": "./lib/rp.js",
+  "main": "./lib/plumbing.js",
   "scripts": {
     "test": "./node_modules/.bin/gulp ci",
     "publish-please": "publish-please",
