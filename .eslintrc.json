@@ -31,7 +31,7 @@
     "no-extra-parens": [2, "all"],
     "no-extra-semi": 2,
     "no-func-assign": 2,
-    "no-inner-declarations": [2, "both"],
+    "no-inner-declarations": [2, "functions"],
     "no-invalid-regexp": 2,
     "no-irregular-whitespace": [2, { "skipComments": false }],
     "no-negated-in-lhs": 2,
