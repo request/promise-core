@@ -27,7 +27,26 @@ module.exports = function (options) {
         PromiseImpl: options.PromiseImpl
     });
 
-    plumbing.interceptInit(options.request);
+
+    // Intercepting Request's init method
+
+    var originalInit = options.request.Request.prototype.init;
+
+    options.request.Request.prototype.init = function RP$initInterceptor(requestOptions) {
+
+        // Init may be called again - currently in case of redirects
+        if (isObjectLike(requestOptions) && !this._callback && !this._rp_promise) {
+
+            plumbing.init.call(this, requestOptions);
+
+        }
+
+        return originalInit.apply(this, arguments);
+
+    };
+
+
+    // Exposing the Promise capabilities
 
     var thenExposed = false;
     for ( var i = 0; i < options.expose.length; i+=1 ) {
