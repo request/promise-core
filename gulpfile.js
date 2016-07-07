@@ -15,7 +15,7 @@ global.expect = chai.expect;
 
 
 var paths = {
-    libJsFiles: ['./configure/**/*.js','./lib/**/*.js', './errors.js'],
+    libJsFiles: ['./configure/**/*.js', './lib/**/*.js', './errors.js'],
     specFiles: './test/spec/**/*.js',
     fixtureFiles: './test/fixtures/**/*.txt',
     gulpfile: './gulpfile.js',
