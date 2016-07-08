@@ -17,7 +17,7 @@ global.expect = chai.expect;
 var paths = {
     libJsFiles: ['./configure/**/*.js', './lib/**/*.js', './errors.js'],
     specFiles: './test/spec/**/*.js',
-    fixtureFiles: './test/fixtures/**/*.txt',
+    fixtureFiles: './test/fixtures/**/*.js',
     gulpfile: './gulpfile.js',
     eslintrc: './.eslintrc.json'
 };
@@ -54,6 +54,7 @@ gulp.task('lint', function () {
         paths.libJsFiles,
         paths.gulpfile,
         paths.specFiles,
+        paths.fixtureFiles,
         paths.gulpfile
     ]))
         .pipe(eslint())
