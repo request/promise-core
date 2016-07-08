@@ -145,7 +145,7 @@ describe('Promise-Core for Request@2', function () {
 
         });
 
-        it('that is successful non-default options', function (done) {
+        it('that is successful with non-default options', function (done) {
 
             request({
                 uri: 'http://localhost:4000/404',
@@ -254,6 +254,122 @@ describe('Promise-Core for Request@2', function () {
                 .then(function (body) {
                     expect(body).to.eql('GET /200');
                     expect(callbackWasCalled).to.eql(true);
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
+    });
+
+    describe('should support Request\'s', function () {
+
+        var request = null, stopServer = null;
+
+        before(function (done) {
+
+            request = stealthyRequire('request');
+
+            configure({
+                request: request,
+                PromiseImpl: Bluebird,
+                expose: [
+                    'then',
+                    'catch',
+                    'finally',
+                    'promise'
+                ]
+            });
+
+            startServer(4000, function (stop) {
+                stopServer = stop;
+                done();
+            });
+
+        });
+
+        after(function (done) {
+
+            stopServer(done);
+
+        });
+
+        it('method shortcuts', function (done) {
+
+            request.post({
+                uri: 'http://localhost:4000/404',
+                body: {
+                    a: 'b'
+                },
+                json: true,
+                simple: false // <-- ensures that parameter is forwarded
+            })
+                .then(function (body) {
+                    expect(body).to.eql('POST /404 - {"a":"b"}');
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
+        it('.defaults(...) feature', function (done) {
+
+            var rpSimpleOff = request.defaults({ simple: false });
+
+            rpSimpleOff({
+                uri: 'http://localhost:4000/404',
+                resolveWithFullResponse: true
+            })
+                .then(function (response) {
+                    expect(response.body).to.eql('GET /404');
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
+        if (process.env.V_REQUEST !== '2.34.0') { // Was never supported in this version so fixing it wouldn't make sense.
+
+            it('.defaults(...) feature using it multiple times', function (done) {
+
+                var rpSimpleOff = request.defaults({ simple: false });
+                var rpSimpleOffWithFullResp = rpSimpleOff.defaults({ resolveWithFullResponse: true });
+
+                rpSimpleOffWithFullResp('http://localhost:4000/404')
+                    .then(function (response) {
+                        expect(response.body).to.eql('GET /404');
+                        done();
+                    })
+                    .catch(function (err) {
+                        done(err);
+                    });
+
+            });
+
+        }
+
+        it('event emitter', function (done) {
+
+            request('http://localhost:4000/200')
+                .on('complete', function (httpResponse, body) {
+                    expect(httpResponse.statusCode).to.eql(200);
+                    expect(body).to.eql('GET /200');
+                    done();
+                });
+
+        });
+
+        it('main function to take extra options as the second parameter', function (done) {
+
+            request('http://localhost:4000/200', { method: 'POST', json: { foo: 'bar' } })
+                .then(function (body) {
+                    expect(body).to.eql('POST /200 - {"foo":"bar"}');
                     done();
                 })
                 .catch(function (err) {

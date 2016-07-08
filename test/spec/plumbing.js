@@ -699,6 +699,72 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
+        it('that ignores the transform option if it is not a function', function (done) {
+
+            // IMHO input validation should reject this but behavior is kept this way for backwards compatibility.
+
+            var context = {};
+            pl.init.call(context, {
+                method: 'HEAD',
+                transform: 'not a function',
+                resolveWithFullResponse: true
+            });
+
+            var res = {
+                statusCode: 200,
+                headers: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function (response) {
+                    expect(response.headers).to.eql(res.headers);
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
+        it('that ignores the transform option for non-2xx responses if it is not a function', function (done) {
+
+            // IMHO input validation should reject this but behavior is kept this way for backwards compatibility.
+
+            var context = {};
+            pl.init.call(context, {
+                method: 'HEAD',
+                transform: 'not a function',
+                resolveWithFullResponse: true
+            });
+
+            var res = {
+                statusCode: 404,
+                headers: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function () {
+                    done(new Error('Expected promise to be rejected.'));
+                })
+                .catch(function (err) {
+                    expect(err instanceof errors.StatusCodeError).to.eql(true);
+                    expect(err.name).to.eql('StatusCodeError');
+                    expect(err.statusCode).to.eql(404);
+                    expect(err.message).to.eql('404 - undefined');
+                    expect(err.error).to.eql(res.body);
+                    expect(err.options).to.eql(context._rp_options);
+                    expect(err.response).to.eql(res);
+                    done();
+                });
+
+        });
+
         it('that also calls an already existing callback', function (done) {
 
             var callbackWasCalled = 0;
