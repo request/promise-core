@@ -7,6 +7,10 @@
   },
   "rules": {
 
+    // Variables
+
+    "no-undefined": 0,
+
     // Node.js and CommonJS
 
     "no-sync": 0
