@@ -1,8 +1,6 @@
 'use strict';
 
-var api = require('@request/api'),
-    client = require('@request/client'),
-    Bluebird = require('bluebird'),
+var Bluebird = require('bluebird'),
     configure = require('../../configure/request-next.js'),
     errors = require('../../errors'),
     nodeVersion = require('node-version'),
@@ -14,6 +12,10 @@ describe('Promise-Core for Request@next', function () {
     if (Number(nodeVersion.major) < 4) {
         return; // request@next uses ES6 and thus wouldn't run on old node.js versions
     }
+
+    var api = require('@request/api'),
+        client = require('@request/client');
+
 
     describe('during configuration', function () {
 
