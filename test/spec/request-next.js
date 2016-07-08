@@ -5,10 +5,15 @@ var api = require('@request/api'),
     Bluebird = require('bluebird'),
     configure = require('../../configure/request-next.js'),
     errors = require('../../errors'),
+    nodeVersion = require('node-version'),
     startServer = require('../fixtures/server.js');
 
 
 describe('Promise-Core for Request@next', function () {
+
+    if (Number(nodeVersion.major) < 4) {
+        return; // request@next uses ES6 and thus wouldn't run on old node.js versions
+    }
 
     describe('during configuration', function () {
 
