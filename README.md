@@ -1,12 +1,10 @@
 <a href="http://promisesaplus.com/">
-    <img src="https://promises-aplus.github.io/promises-spec/assets/logo-small.png"
-         align="right" alt="Promises/A+ logo" />
+    <img src="https://promises-aplus.github.io/promises-spec/assets/logo-small.png" align="right" alt="Promises/A+ logo" />
 </a>
 
 # @request/promise-core
 
 [![Gitter](https://img.shields.io/badge/gitter-join_chat-blue.svg?style=flat-square)](https://gitter.im/request/request-promise?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![Build Status](https://img.shields.io/travis/request/promise-core/master.svg?style=flat-square)](https://travis-ci.org/request/promise-core)
 [![Coverage Status](https://img.shields.io/coveralls/request/promise-core.svg?style=flat-square)](https://coveralls.io/r/request/promise-core)
 [![Dependency Status](https://img.shields.io/gemnasium/request/promise-core.svg?style=flat-square)](https://gemnasium.com/github.com/request/promise-core)
@@ -20,9 +18,67 @@ This package will shortly become the core for the following packages:
 - [`request-promise-bluebird`](https://github.com/request/request-promise-bluebird)
 - [`request-promise-native`](https://github.com/request/request-promise-native)
 
-# Usage
+`@request/promise-core` contains the core logic to add Promise support to [`request`](https://github.com/request/request).
 
-Description forthcoming.
+## Installation for `request@^2.34`
+
+This module is installed via npm:
+
+```
+npm install --save request
+npm install --save @request/promise-core
+```
+
+`request` is defined as a peer-dependency and thus has to be installed separately.
+
+## Usage for `request@^2.34`
+
+``` js
+// 1. Load the request library
+
+// Only use a direct require if you are 100% sure that:
+// - Your project does not use request directly. That is without the Promise capabilities by calling require('request').
+// - Any of the installed libraries use request or request-promise[-any|-bluebird|-native].
+// ...because Request's prototype will be patched in step 2.
+/* var request = require('request'); */
+
+// Instead use:
+var stealthyRequire = require('stealthy-require')(require);
+var request = stealthyRequire('request');
+
+
+// 2. Add Promise support to request
+
+var configure = require('@request/promise-core/configure/request2');
+
+configure({
+    request: request,
+	// Pass your favorite ES6-compatible promise implementation
+    PromiseImpl: Promise,
+	// Expose all methods of the promise instance you want to call on the request(...) call
+    expose: [
+        'then',   // Allows to use request(...).then(...)
+        'catch',  // Allows to use request(...).catch(...)
+        'promise' // Allows to use request(...).promise() which returns the promise instance
+    ]
+});
+
+
+// 3. Use request with its promise capabilities
+
+// E.g. crawl a web page:
+request('http://www.google.com')
+    .then(function (htmlString) {
+        // Process html...
+    })
+    .catch(function (err) {
+        // Crawling failed...
+    });
+```
+
+## Installation and Usage for `request@next`
+
+[Request Next](https://github.com/request/request/issues/1982) is still in alpha. However, `@request/promise-core` is already designed to be compatible and ships with a configuration helper -- `require('@request/promise-core/configure/request-next')` -- that is [used by `request-promise`](https://github.com/request/request-promise/blob/next/lib/rp.js) in its "next" branch.
 
 ## Contributing
 
