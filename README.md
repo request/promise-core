@@ -38,7 +38,7 @@ npm install --save @request/promise-core
 
 // Only use a direct require if you are 100% sure that:
 // - Your project does not use request directly. That is without the Promise capabilities by calling require('request').
-// - Any of the installed libraries use request or request-promise[-any|-bluebird|-native].
+// - Any of the installed libraries use request.
 // ...because Request's prototype will be patched in step 2.
 /* var request = require('request'); */
 
