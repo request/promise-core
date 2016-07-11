@@ -15,6 +15,7 @@
   "main": "./lib/plumbing.js",
   "scripts": {
     "test": "./node_modules/.bin/gulp ci",
+    "test-publish": "./node_modules/.bin/gulp ci-no-cov",
     "publish-please": "publish-please",
     "prepublish": "publish-please guard"
   },
