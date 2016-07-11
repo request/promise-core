@@ -101,7 +101,8 @@ describe('Promise-Core\'s Plumbing', function () {
             expect(context._rp_options).to.eql({
                 simple: true,
                 resolveWithFullResponse: false,
-                transform: undefined
+                transform: undefined,
+                transform2xxOnly: false
             });
 
         });
@@ -119,7 +120,8 @@ describe('Promise-Core\'s Plumbing', function () {
                 custom: 'test',
                 simple: true,
                 resolveWithFullResponse: false,
-                transform: undefined
+                transform: undefined,
+                transform2xxOnly: false
             });
 
         });
@@ -132,7 +134,8 @@ describe('Promise-Core\'s Plumbing', function () {
             pl.init.call(context, {
                 simple: false,
                 resolveWithFullResponse: true,
-                transform: customTransform
+                transform: customTransform,
+                transform2xxOnly: true
             });
 
             delete context._rp_options.callback;
@@ -140,7 +143,8 @@ describe('Promise-Core\'s Plumbing', function () {
             expect(context._rp_options).to.eql({
                 simple: false,
                 resolveWithFullResponse: true,
-                transform: customTransform
+                transform: customTransform,
+                transform2xxOnly: true
             });
 
         });
@@ -477,6 +481,65 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
+        it('that applies the transform function to 2xx responses for simple = true and transform2xxOnly = true', function (done) {
+
+            var context = {};
+            pl.init.call(context, {
+                transform: function (body, response, resolveWithFullResponse) {
+                    return JSON.stringify(body) + ' - ' + JSON.stringify(response) + ' - ' + resolveWithFullResponse;
+                },
+                transform2xxOnly: true
+            });
+
+            var res = {
+                statusCode: 200,
+                body: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function (transformed) {
+                    expect(transformed).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
+        it('that applies the transform function to 2xx responses for simple = false and transform2xxOnly = true', function (done) {
+
+            var context = {};
+            pl.init.call(context, {
+                simple: false,
+                transform: function (body, response, resolveWithFullResponse) {
+                    return JSON.stringify(body) + ' - ' + JSON.stringify(response) + ' - ' + resolveWithFullResponse;
+                },
+                transform2xxOnly: true
+            });
+
+            var res = {
+                statusCode: 200,
+                body: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function (transformed) {
+                    expect(transformed).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
         it('that applies the transform function to non-2xx responses in simple mode', function (done) {
 
             var context = {};
@@ -613,6 +676,100 @@ describe('Promise-Core\'s Plumbing', function () {
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(res);
                     done();
+                });
+
+        });
+
+        it('that applies the transform function to non-2xx responses for simple = false and transform2xxOnly = false', function (done) {
+
+            var context = {};
+            pl.init.call(context, {
+                simple: false,
+                transform: function (body, response, resolveWithFullResponse) {
+                    return JSON.stringify(body) + ' - ' + JSON.stringify(response) + ' - ' + resolveWithFullResponse;
+                }
+            });
+
+            var res = {
+                statusCode: 404,
+                body: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function (transformed) {
+                    expect(transformed).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
+                });
+
+        });
+
+        it('that does not apply the transform function to non-2xx responses for simple = true and transform2xxOnly = false', function (done) {
+
+            var context = {};
+            pl.init.call(context, {
+                transform: function (body, response, resolveWithFullResponse) {
+                    return JSON.stringify(body) + ' - ' + JSON.stringify(response) + ' - ' + resolveWithFullResponse;
+                },
+                transform2xxOnly: true
+            });
+
+            var res = {
+                statusCode: 404,
+                body: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function () {
+                    done(new Error('Expected promise to be rejected.'));
+                })
+                .catch(function (err) {
+                    expect(err instanceof errors.StatusCodeError).to.eql(true);
+                    expect(err.name).to.eql('StatusCodeError');
+                    expect(err.statusCode).to.eql(404);
+                    expect(err.message).to.eql('404 - {"a":"b"}');
+                    expect(err.error).to.eql(res.body);
+                    expect(err.options).to.eql(context._rp_options);
+                    expect(err.response).to.eql(res);
+                    done();
+                });
+
+        });
+
+        it('that does not apply the transform function to non-2xx responses for simple = false and transform2xxOnly = false', function (done) {
+
+            var context = {};
+            pl.init.call(context, {
+                simple: false,
+                transform: function (body, response, resolveWithFullResponse) {
+                    return JSON.stringify(body) + ' - ' + JSON.stringify(response) + ' - ' + resolveWithFullResponse;
+                },
+                transform2xxOnly: true
+            });
+
+            var res = {
+                statusCode: 404,
+                body: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, res, res.body);
+
+            context._rp_promise
+                .then(function (body) {
+                    expect(body).to.eql(res.body);
+                    done();
+                })
+                .catch(function (err) {
+                    done(err);
                 });
 
         });

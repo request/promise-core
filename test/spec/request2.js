@@ -150,7 +150,11 @@ describe('Promise-Core for Request@2', function () {
             request({
                 uri: 'http://localhost:4000/404',
                 simple: false,
-                resolveWithFullResponse: true
+                resolveWithFullResponse: true,
+                transform: function () {
+                    return 'must not be called';
+                },
+                transform2xxOnly: true
             })
                 .then(function (response) {
                     expect(response.body).to.eql('GET /404');
