@@ -96,7 +96,9 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
 
 ## Change History
 
-Not released yet.
+- 1.0.0-rc.1 (2016-07-10)
+    - Reimplementation of core logic based on `request-promise@3.0.0`
+    - Plus `transform2xxOnly` option (fixes https://github.com/request/request-promise/issues/131)
 
 ## License (ISC)
 
