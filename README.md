@@ -11,7 +11,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/npm/promise-core/badge.svg?style=flat-square)](https://snyk.io/test/npm/promise-core)
 
 
-This package will shortly become the core for the following packages:
+This package will is the core for the following packages:
 
 - [`request-promise`](https://github.com/request/request-promise)
 - [`request-promise-any`](https://github.com/request/request-promise-any)
@@ -19,6 +19,8 @@ This package will shortly become the core for the following packages:
 - [`request-promise-native`](https://github.com/request/request-promise-native)
 
 `@request/promise-core` contains the core logic to add Promise support to [`request`](https://github.com/request/request).
+
+Please use one of the libraries above. It is only recommended to use this library directly, if you have very specific requirements.
 
 ## Installation for `request@^2.34`
 
@@ -96,6 +98,8 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
 
 ## Change History
 
+- 1.0.0 (2016-07-15)
+    - All tests green, ready for prime time
 - 1.0.0-rc.1 (2016-07-10)
     - Reimplementation of core logic based on `request-promise@3.0.0`
     - Plus `transform2xxOnly` option (fixes https://github.com/request/request-promise/issues/131)
