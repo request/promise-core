@@ -11,7 +11,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/npm/promise-core/badge.svg?style=flat-square)](https://snyk.io/test/npm/promise-core)
 
 
-This package will is the core for the following packages:
+This package is the core for the following packages:
 
 - [`request-promise`](https://github.com/request/request-promise)
 - [`request-promise-any`](https://github.com/request/request-promise-any)
