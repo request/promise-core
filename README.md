@@ -45,8 +45,10 @@ npm install --save @request/promise-core
 /* var request = require('request'); */
 
 // Instead use:
-var stealthyRequire = require('stealthy-require')(require);
-var request = stealthyRequire('request');
+var stealthyRequire = require('stealthy-require');
+var request = stealthyRequire(require.cache, function () {
+    return require('request');
+});
 
 
 // 2. Add Promise support to request

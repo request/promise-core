@@ -3,7 +3,7 @@
 var Bluebird = require('bluebird'),
     configure = require('../../configure/request2.js'),
     errors = require('../../errors'),
-    stealthyRequire = require('stealthy-require')(require),
+    stealthyRequire = require('stealthy-require'),
     startServer = require('../fixtures/server.js');
 
 
@@ -13,7 +13,9 @@ describe('Promise-Core for Request@2', function () {
 
         it('should verify the options', function () {
 
-            var request = stealthyRequire('request');
+            var request = stealthyRequire(require.cache, function () {
+                return require('request');
+            });
 
             expect(function () {
                 configure();
@@ -76,7 +78,9 @@ describe('Promise-Core for Request@2', function () {
                 });
             }).not.to.throw();
 
-            request = stealthyRequire('request');
+            request = stealthyRequire(require.cache, function () {
+                return require('request');
+            });
 
             expect(function () {
                 configure({
@@ -106,7 +110,9 @@ describe('Promise-Core for Request@2', function () {
 
         before(function (done) {
 
-            request = stealthyRequire('request');
+            request = stealthyRequire(require.cache, function () {
+                return require('request');
+            });
 
             configure({
                 request: request,
@@ -274,7 +280,9 @@ describe('Promise-Core for Request@2', function () {
 
         before(function (done) {
 
-            request = stealthyRequire('request');
+            request = stealthyRequire(require.cache, function () {
+                return require('request');
+            });
 
             configure({
                 request: request,

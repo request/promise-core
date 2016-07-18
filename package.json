@@ -55,6 +55,6 @@
     "request": "^2.34.0",
     "rimraf": "~2.5.3",
     "run-sequence": "~1.2.2",
-    "stealthy-require": "~0.1.0"
+    "stealthy-require": "~1.0.0"
   }
 }
