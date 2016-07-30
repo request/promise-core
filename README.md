@@ -64,7 +64,12 @@ configure({
         'then',   // Allows to use request(...).then(...)
         'catch',  // Allows to use request(...).catch(...)
         'promise' // Allows to use request(...).promise() which returns the promise instance
-    ]
+    ],
+    // Optional: Pass a callback that is called within the Promise constructor
+    constructorMixin: function (resolve, reject) {
+        // `this` is the request object
+        // Additional arguments may be passed depending on the PromiseImpl used
+    }
 });
 
 
@@ -100,6 +105,8 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
 
 ## Change History
 
+- 1.1.0 (upcoming)
+    - Added `constructorMixin` option to enable [request/request-promise#123](https://github.com/request/request-promise/pull/123)
 - 1.0.0 (2016-07-15)
     - All tests green, ready for prime time
 - 1.0.0-rc.1 (2016-07-10)

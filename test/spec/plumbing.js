@@ -30,7 +30,15 @@ describe('Promise-Core\'s Plumbing', function () {
 
         expect(function () {
             plumbing({
-                PromiseImpl: function () {}
+                PromiseImpl: function () {},
+                constructorMixin: false
+            });
+        }).to.throw('Please verify options.PromiseImpl');
+
+        expect(function () {
+            plumbing({
+                PromiseImpl: function () {},
+                constructorMixin: function () {}
             });
         }).not.to.throw();
 
@@ -86,6 +94,37 @@ describe('Promise-Core\'s Plumbing', function () {
                 .catch(function (err) {
                     expect(err.message).to.eql('Rejected by test case');
                     done();
+                });
+
+        });
+
+        it('that invokes the constructorMixin', function (done) {
+
+            var pl2 = plumbing({
+                PromiseImpl: Bluebird,
+                constructorMixin: function (resolve, reject) {
+                    if (this._rp_reject === reject) {
+                        reject('mixin invoked and this binding correct');
+                    } else {
+                        reject('mixin invoked but this binding not correct');
+                    }
+                }
+            });
+
+            var context = {};
+            pl2.init.call(context, {});
+
+            context._rp_promise
+                .then(function () {
+                    done(new Error('Expected rejected promise'));
+                })
+                .catch(function (message) {
+                    try {
+                        expect(message).to.eql('mixin invoked and this binding correct');
+                        done();
+                    } catch (e) {
+                        done(e);
+                    }
                 });
 
         });
