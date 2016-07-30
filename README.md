@@ -87,7 +87,7 @@ request('http://www.google.com')
 
 ## Installation and Usage for `request@next`
 
-[Request Next](https://github.com/request/request/issues/1982) is still in alpha. However, `@request/promise-core` is already designed to be compatible and ships with a configuration helper -- `require('@request/promise-core/configure/request-next')` -- that is [used by `request-promise`](https://github.com/request/request-promise/blob/next/lib/rp.js) in its "next" branch.
+[Request Next](https://github.com/request/request/issues/1982) is still in alpha. However, `@request/promise-core` is already designed to be compatible and ships with a configuration helper – `require('@request/promise-core/configure/request-next')` – that is [used by `request-promise`](https://github.com/request/request-promise/blob/next/lib/rp.js) in its "next" branch.
 
 ## Contributing
 
@@ -111,7 +111,7 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
     - All tests green, ready for prime time
 - 1.0.0-rc.1 (2016-07-10)
     - Reimplementation of core logic based on `request-promise@3.0.0`
-    - Plus `transform2xxOnly` option (fixes https://github.com/request/request-promise/issues/131)
+    - Plus `transform2xxOnly` option (fixes [request/request-promise#131](https://github.com/request/request-promise/issues/131))
 
 ## License (ISC)
 
