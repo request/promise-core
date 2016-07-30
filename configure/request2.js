@@ -24,7 +24,8 @@ module.exports = function (options) {
 
 
     var plumbing = core({
-        PromiseImpl: options.PromiseImpl
+        PromiseImpl: options.PromiseImpl,
+        constructorMixin: options.constructorMixin
     });
 
 

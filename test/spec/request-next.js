@@ -92,6 +92,34 @@ describe('Promise-Core for Request@next', function () {
 
         });
 
+        it('should forward the constructorMixin', function () {
+
+            var mixinCalled = false; // eslint-disable-line no-unused-vars
+
+            var request = api({
+                type: 'basic',
+                define: {
+                    request: configure({
+                        client: client,
+                        PromiseImpl: Bluebird,
+                        expose: [
+                            'then',
+                            'catch'
+                        ],
+                        constructorMixin: function () {
+                            mixinCalled = true;
+                        }
+                    })
+                }
+            });
+
+            return request('http://localhost:4000') // not started yet so expecting ECONNREFUSED
+                .catch(function () {
+                    expect(mixinCalled).to.eql(true);
+                });
+
+        });
+
     });
 
     /**
