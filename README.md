@@ -105,7 +105,7 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
 
 ## Change History
 
-- 1.1.0 (upcoming)
+- 1.1.0 (2016-07-30)
     - Added `constructorMixin` option to enable [request/request-promise#123](https://github.com/request/request-promise/pull/123)
 - 1.0.0 (2016-07-15)
     - All tests green, ready for prime time
