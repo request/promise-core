@@ -2,7 +2,7 @@
     <img src="https://promises-aplus.github.io/promises-spec/assets/logo-small.png" align="right" alt="Promises/A+ logo" />
 </a>
 
-# @request/promise-core
+# request-promise-core
 
 [![Gitter](https://img.shields.io/badge/gitter-join_chat-blue.svg?style=flat-square&maxAge=2592000)](https://gitter.im/request/request-promise?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://img.shields.io/travis/request/promise-core/master.svg?style=flat-square&maxAge=2592000)](https://travis-ci.org/request/promise-core)
@@ -18,7 +18,7 @@ This package is the core for the following packages:
 - [`request-promise-bluebird`](https://github.com/request/request-promise-bluebird)
 - [`request-promise-native`](https://github.com/request/request-promise-native)
 
-`@request/promise-core` contains the core logic to add Promise support to [`request`](https://github.com/request/request).
+`request-promise-core` contains the core logic to add Promise support to [`request`](https://github.com/request/request).
 
 Please use one of the libraries above. It is only recommended to use this library directly, if you have very specific requirements.
 
@@ -28,7 +28,7 @@ This module is installed via npm:
 
 ```
 npm install --save request
-npm install --save @request/promise-core
+npm install --save request-promise-core
 ```
 
 `request` is defined as a peer-dependency and thus has to be installed separately.
@@ -53,7 +53,7 @@ var request = stealthyRequire(require.cache, function () {
 
 // 2. Add Promise support to request
 
-var configure = require('@request/promise-core/configure/request2');
+var configure = require('request-promise-core/configure/request2');
 
 configure({
     request: request,
@@ -87,7 +87,7 @@ request('http://www.google.com')
 
 ## Installation and Usage for `request@next`
 
-[Request Next](https://github.com/request/request/issues/1982) is still in alpha. However, `@request/promise-core` is already designed to be compatible and ships with a configuration helper – `require('@request/promise-core/configure/request-next')` – that is [used by `request-promise`](https://github.com/request/request-promise/blob/next/lib/rp.js) in its "next" branch.
+[Request Next](https://github.com/request/request/issues/1982) is still in alpha. However, `request-promise-core` is already designed to be compatible and ships with a configuration helper – `require('request-promise-core/configure/request-next')` – that is [used by `request-promise`](https://github.com/request/request-promise/blob/next/lib/rp.js) in its "next" branch.
 
 ## Contributing
 
@@ -105,6 +105,8 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
 
 ## Change History
 
+- 1.1.1 (2016-08-08)
+    - Renamed package to `request-promise-core` because there where [too many issues](https://github.com/request/request-promise/issues/137) with the scoped package name `@request/promise-core`
 - 1.1.0 (2016-07-30)
     - Added `constructorMixin` option to enable [request/request-promise#123](https://github.com/request/request-promise/pull/123)
 - 1.0.0 (2016-07-15)
