@@ -106,7 +106,7 @@ If you want to debug a test you should use `gulp test-without-coverage` to run a
 ## Change History
 
 - 1.1.1 (2016-08-08)
-    - Renamed package to `request-promise-core` because there where [too many issues](https://github.com/request/request-promise/issues/137) with the scoped package name `@request/promise-core`
+    - Renamed package to `request-promise-core` because there where [too](https://github.com/request/request-promise/issues/137) [many](https://github.com/request/request-promise/issues/141) issues with the scoped package name `@request/promise-core`
 - 1.1.0 (2016-07-30)
     - Added `constructorMixin` option to enable [request/request-promise#123](https://github.com/request/request-promise/pull/123)
 - 1.0.0 (2016-07-15)
