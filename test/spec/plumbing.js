@@ -5,6 +5,7 @@ var _ = require('lodash'),
     errors = require('../../errors'),
     plumbing = require('../../');
 
+var STATUS_CODE_MESSAGE = 'Request status code was not 2xx';
 
 describe('Promise-Core\'s Plumbing', function () {
 
@@ -336,7 +337,7 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
-        it('that rejects a non-2xx response in simple mode', function (done) {
+        it('that rejects a non-2xx response in simple mode', function () {
 
             var context = {};
             pl.init.call(context, {});
@@ -349,19 +350,17 @@ describe('Promise-Core\'s Plumbing', function () {
             };
             pl.callback.call(context, null, response, response.body);
 
-            context._rp_promise
+            return context._rp_promise
                 .then(function () {
-                    done(new Error('Expected promise to be rejected.'));
+                    throw new Error('Expected promise to be rejected.');
                 })
-                .catch(function (err) {
-                    expect(err instanceof errors.StatusCodeError).to.eql(true);
+                .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql('404 - {"a":"b"}');
+                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
                     expect(err.error).to.eql(response.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(response);
-                    done();
                 });
 
         });
@@ -579,7 +578,7 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
-        it('that applies the transform function to non-2xx responses in simple mode', function (done) {
+        it('that applies the transform function to non-2xx responses in simple mode', function () {
 
             var context = {};
             pl.init.call(context, {
@@ -596,19 +595,18 @@ describe('Promise-Core\'s Plumbing', function () {
             };
             pl.callback.call(context, null, res, res.body);
 
-            context._rp_promise
+            return context._rp_promise
                 .then(function () {
-                    done(new Error('Expected promise to be rejected.'));
+                    throw new Error('Expected promise to be rejected.');
                 })
-                .catch(function (err) {
+                .catch(errors.StatusCodeError, function (err) {
                     expect(err instanceof errors.StatusCodeError).to.eql(true);
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql('404 - {"a":"b"}');
+                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
-                    done();
                 });
 
         });
@@ -649,7 +647,7 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
-        it('that applies the transform function to non-2xx responses in simple mode which returns a promise', function (done) {
+        it('that applies the transform function to non-2xx responses in simple mode which returns a promise', function () {
 
             var context = {};
             pl.init.call(context, {
@@ -666,19 +664,17 @@ describe('Promise-Core\'s Plumbing', function () {
             };
             pl.callback.call(context, null, res, res.body);
 
-            context._rp_promise
+            return context._rp_promise
                 .then(function () {
-                    done(new Error('Expected promise to be rejected.'));
+                    throw new Error('Expected promise to be rejected.');
                 })
-                .catch(function (err) {
-                    expect(err instanceof errors.StatusCodeError).to.eql(true);
+                .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql('404 - {"a":"b"}');
+                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
-                    done();
                 });
 
         });
@@ -748,7 +744,7 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
-        it('that does not apply the transform function to non-2xx responses for simple = true and transform2xxOnly = false', function (done) {
+        it('that does not apply the transform function to non-2xx responses for simple = true and transform2xxOnly = false', function () {
 
             var context = {};
             pl.init.call(context, {
@@ -766,19 +762,17 @@ describe('Promise-Core\'s Plumbing', function () {
             };
             pl.callback.call(context, null, res, res.body);
 
-            context._rp_promise
+            return context._rp_promise
                 .then(function () {
-                    done(new Error('Expected promise to be rejected.'));
+                    throw new Error('Expected promise to be rejected.');
                 })
-                .catch(function (err) {
-                    expect(err instanceof errors.StatusCodeError).to.eql(true);
+                .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql('404 - {"a":"b"}');
+                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(res);
-                    done();
                 });
 
         });
@@ -925,7 +919,7 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
-        it('that ignores the transform option for non-2xx responses if it is not a function', function (done) {
+        it('that ignores the transform option for non-2xx responses if it is not a function', function () {
 
             // IMHO input validation should reject this but behavior is kept this way for backwards compatibility.
 
@@ -944,19 +938,17 @@ describe('Promise-Core\'s Plumbing', function () {
             };
             pl.callback.call(context, null, res, res.body);
 
-            context._rp_promise
+            return context._rp_promise
                 .then(function () {
-                    done(new Error('Expected promise to be rejected.'));
+                    throw new Error('Expected promise to be rejected.');
                 })
-                .catch(function (err) {
-                    expect(err instanceof errors.StatusCodeError).to.eql(true);
+                .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql('404 - undefined');
+                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(res);
-                    done();
                 });
 
         });
