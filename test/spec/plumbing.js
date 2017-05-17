@@ -5,8 +5,6 @@ var _ = require('lodash'),
     errors = require('../../errors'),
     plumbing = require('../../');
 
-var STATUS_CODE_MESSAGE = 'Request status code was not 2xx';
-
 describe('Promise-Core\'s Plumbing', function () {
 
     it('should verify the options', function () {
@@ -357,7 +355,35 @@ describe('Promise-Core\'s Plumbing', function () {
                 .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
+                    expect(err.message).to.eql('404 - Not Found');
+                    expect(err.error).to.eql(response.body);
+                    expect(err.options).to.eql(context._rp_options);
+                    expect(err.response).to.eql(response);
+                });
+
+        });
+
+        it('that rejects a non-2xx response in simple mode', function () {
+
+            var context = {};
+            pl.init.call(context, {});
+
+            var response = {
+                statusCode: 404,
+                body: {
+                    a: 'b'
+                }
+            };
+            pl.callback.call(context, null, response, response.body);
+
+            return context._rp_promise
+                .then(function () {
+                    throw new Error('Expected promise to be rejected.');
+                })
+                .catch(errors.StatusCodeError, function (err) {
+                    expect(err.name).to.eql('StatusCodeError');
+                    expect(err.statusCode).to.eql(404);
+                    expect(err.message).to.eql('404 - Not Found');
                     expect(err.error).to.eql(response.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(response);
@@ -603,7 +629,7 @@ describe('Promise-Core\'s Plumbing', function () {
                     expect(err instanceof errors.StatusCodeError).to.eql(true);
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
+                    expect(err.message).to.eql('404 - Not Found');
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
@@ -671,7 +697,7 @@ describe('Promise-Core\'s Plumbing', function () {
                 .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
+                    expect(err.message).to.eql('404 - Not Found');
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(JSON.stringify(res.body) + ' - ' + JSON.stringify(res) + ' - false');
@@ -769,7 +795,7 @@ describe('Promise-Core\'s Plumbing', function () {
                 .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
+                    expect(err.message).to.eql('404 - Not Found');
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(res);
@@ -945,7 +971,7 @@ describe('Promise-Core\'s Plumbing', function () {
                 .catch(errors.StatusCodeError, function (err) {
                     expect(err.name).to.eql('StatusCodeError');
                     expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql(STATUS_CODE_MESSAGE);
+                    expect(err.message).to.eql('404 - Not Found');
                     expect(err.error).to.eql(res.body);
                     expect(err.options).to.eql(context._rp_options);
                     expect(err.response).to.eql(res);
