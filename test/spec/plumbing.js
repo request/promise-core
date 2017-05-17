@@ -363,34 +363,6 @@ describe('Promise-Core\'s Plumbing', function () {
 
         });
 
-        it('that rejects a non-2xx response in simple mode', function () {
-
-            var context = {};
-            pl.init.call(context, {});
-
-            var response = {
-                statusCode: 404,
-                body: {
-                    a: 'b'
-                }
-            };
-            pl.callback.call(context, null, response, response.body);
-
-            return context._rp_promise
-                .then(function () {
-                    throw new Error('Expected promise to be rejected.');
-                })
-                .catch(errors.StatusCodeError, function (err) {
-                    expect(err.name).to.eql('StatusCodeError');
-                    expect(err.statusCode).to.eql(404);
-                    expect(err.message).to.eql('404 - Not Found');
-                    expect(err.error).to.eql(response.body);
-                    expect(err.options).to.eql(context._rp_options);
-                    expect(err.response).to.eql(response);
-                });
-
-        });
-
         it('that resolves a non-2xx response in non-simple mode', function (done) {
 
             var context = {};
