@@ -6,8 +6,8 @@ describe('StatusCodeError', function () {
 
     it('should use http message string for errors', function () {
 
-        var e = new errors.StatusCodeError(302);
-        expect(e.message).to.eql('302 - Found');
+        var e = new errors.StatusCodeError(304);
+        expect(e.message).to.eql('304 - Not Modified');
 
         e = new errors.StatusCodeError(400);
         expect(e.message).to.eql('400 - Bad Request');
