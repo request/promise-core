@@ -1,9 +1,8 @@
 'use strict';
 
 var core = require('../'),
-    isArray = require('lodash/isArray'),
-    isFunction = require('lodash/isFunction'),
-    isObjectLike = require('lodash/isObjectLike');
+    isFunction = require('lodash.isfunction'),
+    isObjectLike = require('lodash.isobjectlike');
 
 
 module.exports = function (options) {
@@ -18,7 +17,7 @@ module.exports = function (options) {
         throw new TypeError(errorText + '.request');
     }
 
-    if (!isArray(options.expose) || options.expose.length === 0) {
+    if (!Array.isArray(options.expose) || options.expose.length === 0) {
         throw new TypeError(errorText + '.expose');
     }
 

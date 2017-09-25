@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash'),
+var isFunction = require('lodash.isfunction'),
     Bluebird = require('bluebird'),
     errors = require('../../errors'),
     plumbing = require('../../');
@@ -62,8 +62,8 @@ describe('Promise-Core\'s Plumbing', function () {
 
             pl.init.call(context, {});
 
-            expect(_.isFunction(context._rp_promise.then)).to.eql(true);
-            expect(_.isFunction(context._rp_resolve)).to.eql(true);
+            expect(isFunction(context._rp_promise.then)).to.eql(true);
+            expect(isFunction(context._rp_resolve)).to.eql(true);
 
             context._rp_resolve();
 
@@ -82,8 +82,8 @@ describe('Promise-Core\'s Plumbing', function () {
             var context = {};
             pl.init.call(context, {});
 
-            expect(_.isFunction(context._rp_promise.then)).to.eql(true);
-            expect(_.isFunction(context._rp_reject)).to.eql(true);
+            expect(isFunction(context._rp_promise.then)).to.eql(true);
+            expect(isFunction(context._rp_reject)).to.eql(true);
 
             context._rp_reject(new Error('Rejected by test case'));
 
@@ -134,7 +134,7 @@ describe('Promise-Core\'s Plumbing', function () {
             var context = {};
             pl.init.call(context, {});
 
-            expect(_.isFunction(context._rp_options.callback)).to.eql(true);
+            expect(isFunction(context._rp_options.callback)).to.eql(true);
             delete context._rp_options.callback;
 
             expect(context._rp_options).to.eql({
