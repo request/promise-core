@@ -33,6 +33,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
+    "fast-safe-stringify": "^2.0.3",
     "lodash": "^4.13.1"
   },
   "peerDependencies": {
