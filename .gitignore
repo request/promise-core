@@ -1,7 +1,7 @@
 /.idea/
 /coverage/
 /node_modules/
-#/.project
-#/.settings
+/.project
+/.settings
 .DS_Store
 npm-debug.log
