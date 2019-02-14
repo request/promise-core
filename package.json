@@ -1,6 +1,6 @@
 {
   "name": "request-promise-core",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Core Promise support implementation for the simplified HTTP request client 'request'.",
   "keywords": [
     "xhr",
