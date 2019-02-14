@@ -51,7 +51,7 @@
     "gulp-istanbul": "~1.0.0",
     "gulp-mocha": "~2.2.0",
     "node-version": "~1.0.0",
-    "publish-please": "~2.1.4",
+    "publish-please": "~5.4.3",
     "request": "^2.34.0",
     "rimraf": "~2.5.3",
     "run-sequence": "~1.2.2",
