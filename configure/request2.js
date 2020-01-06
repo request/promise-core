@@ -1,9 +1,9 @@
 'use strict';
 
 var core = require('../'),
-    isArray = require('lodash/isArray'),
-    isFunction = require('lodash/isFunction'),
-    isObjectLike = require('lodash/isObjectLike');
+    isArray = Array.isArray,
+    isFunction = require('lodash.isfunction'),
+    isObjectLike = require('lodash.isobjectlike');
 
 
 module.exports = function (options) {
