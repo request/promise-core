@@ -32,9 +32,6 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "dependencies": {
-    "lodash": "^4.17.15"
-  },
   "peerDependencies": {
     "request": "^2.34"
   },
@@ -50,6 +47,8 @@
     "gulp-eslint": "~2.1.0",
     "gulp-istanbul": "~1.0.0",
     "gulp-mocha": "~2.2.0",
+    "lodash.flatten": "^4.4.0",
+    "lodash.isfunction": "^3.0.9",
     "node-version": "~1.0.0",
     "publish-please": "~2.4.1",
     "request": "^2.34.0",

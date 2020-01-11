@@ -8,7 +8,7 @@ var chalk = require('chalk');
 var rimraf = require('rimraf');
 var coveralls = require('gulp-coveralls');
 var eslint = require('gulp-eslint');
-var _ = require('lodash');
+var flatten = require('lodash.flatten');
 
 var chai = require('chai');
 global.expect = chai.expect;
@@ -27,7 +27,7 @@ gulp.task('dev', ['watch', 'validate']);
 
 gulp.task('watch', function () {
 
-    gulp.watch(_.flatten([
+    gulp.watch(flatten([
         paths.libJsFiles,
         paths.specFiles,
         paths.fixtureFiles,
@@ -36,7 +36,7 @@ gulp.task('watch', function () {
         'validate'
     ]);
 
-    gulp.watch(_.flatten([
+    gulp.watch(flatten([
         paths.eslintrc
     ]), [
         'lint'
@@ -50,7 +50,7 @@ gulp.task('validate', function (done) {
 
 gulp.task('lint', function () {
 
-    return gulp.src(_.flatten([
+    return gulp.src(flatten([
         paths.libJsFiles,
         paths.gulpfile,
         paths.specFiles,
