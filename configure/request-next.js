@@ -1,9 +1,10 @@
 'use strict';
 
 var core = require('../'),
+    helpers = require('../lib/helpers'),
     isArray = Array.isArray,
-    isFunction = require('lodash.isfunction'),
-    isObjectLike = require('lodash.isobjectlike');
+    isFunction = helpers.isFunction,
+    isObjectLike = helpers.isObjectLike;
 
 
 module.exports = function (options) {
