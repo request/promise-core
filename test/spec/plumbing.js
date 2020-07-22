@@ -141,7 +141,8 @@ describe('Promise-Core\'s Plumbing', function () {
                 simple: true,
                 resolveWithFullResponse: false,
                 transform: undefined,
-                transform2xxOnly: false
+                transform2xxOnly: false,
+                pause: false
             });
 
         });
@@ -160,7 +161,8 @@ describe('Promise-Core\'s Plumbing', function () {
                 simple: true,
                 resolveWithFullResponse: false,
                 transform: undefined,
-                transform2xxOnly: false
+                transform2xxOnly: false,
+                pause: false
             });
 
         });
@@ -183,7 +185,8 @@ describe('Promise-Core\'s Plumbing', function () {
                 simple: false,
                 resolveWithFullResponse: true,
                 transform: customTransform,
-                transform2xxOnly: true
+                transform2xxOnly: true,
+                pause: false
             });
 
         });
