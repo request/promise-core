@@ -33,7 +33,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "request": "^2.34"
